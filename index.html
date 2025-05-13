@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Dilatação do Tempo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body>
+  <header class="bg-dark text-white text-center py-4">
+    <h1>Simulador de Dilatação do Tempo</h1>
+    <p>Explore os efeitos relativísticos da velocidade sobre o tempo!</p>
+  </header>
+
+  <main class="container mt-5">
+    <section class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <h2>Como funciona?</h2>
+        <p>
+          Este simulador demonstra como o tempo é percebido de forma diferente por objetos em
+          diferentes velocidades, com base na Teoria da Relatividade.
+        </p>
+        <a href="documentacao.html" class="btn btn-primary">Acessar Documentação</a>
+      </div>
+    </section>
+
+  <main class="container mt-5">
+    <section class="row justify-content-center">
+      <div class="col-md-8 text-center">
+        <h2>Baixe o Simulador</h2>
+        <p>
+          Este simulador está em desenvolvimento e se encontra na versão alpha. Caso encontre alguma falha no Simulador, reporte ao nosso suporte.
+        </p>
+        <a href="download.html" class="btn btn-primary">Baixar Simulador</a>
+      </div>
+    </section>
+
+    <section class="mt-5">
+      <h3>Capturas de Tela</h3>
+      <div class="row">
+        <div class="col-md-4">
+          <img src="img/captura1.png" class="img-fluid" alt="Simulação 1" />
+        </div>
+        <div class="col-md-4">
+          <img src="img/captura2.png" class="img-fluid" alt="Simulação 2" />
+        </div>
+      </div>
+    </section>
+  </main>
+
+<section class="container my-5" data-aos="fade-up">
+  <h2 class="text-center">🧠 Simule a Dilatação do Tempo</h2>
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-4">
+      <label for="velocidade" class="form-label">Velocidade (km/h)</label>
+      <input type="number" class="form-control" id="velocidade" placeholder="Ex: 27000">
+    </div>
+    <div class="col-md-4">
+      <label for="tempo" class="form-label">Tempo real (horas)</label>
+      <input type="number" class="form-control" id="tempo" placeholder="Ex: 1">
+    </div>
+  </div>
+  <div class="text-center mt-3">
+    <button class="btn btn-primary btn-lg" onclick="calcularDilatacao()">Calcular</button>
+  </div>
+  <div class="mt-4 text-center">
+    <p id="resultado" class="fs-5"></p>
+  </div>
+</section>
+  
+  <footer class="bg-white text-center mt-5 py-4">
+    <p>Projeto desenvolvido por Jean Paulo &copy; 2025</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+  <div id="particles-js"></div>
+<script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+<script>
+  particlesJS.load('particles-js', 'particles.json', function() {
+    console.log('particles.js carregado');
+  });
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+<script>
+function calcularDilatacao() {
+  const c = 299_792_458;
+  const vel_kmh = parseFloat(document.getElementById("velocidade").value);
+  const tempo_h = parseFloat(document.getElementById("tempo").value);
+
+  if (isNaN(vel_kmh) || isNaN(tempo_h)) {
+    document.getElementById("resultado").innerText = "Por favor, preencha os dois campos.";
+    return;
+  }
+
+  const tempo_real = tempo_h * 3600;
+  const vel_ms = vel_kmh * 1000 / 3600;
+  const t_dilatado = tempo_real / Math.sqrt(1 - (vel_ms ** 2 / c ** 2));
+  const diferenca = t_dilatado - tempo_real;
+
+  document.getElementById("resultado").innerHTML = `
+    Tempo dilatado: <strong>${t_dilatado.toFixed(9)}</strong> segundos<br>
+    Diferença: <strong>${diferenca.toFixed(9)}</strong> segundos
+  `;
+}
+</script>
+</body>
+</html>
